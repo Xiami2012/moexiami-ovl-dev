@@ -66,7 +66,7 @@ src_compile() {
 	GOPATH="${S}" \
 		${S}/bin/vbuild
 	# vbuild returns 0 even on failure
-	[ -f "${S}/bin/*/v2ray" ] || die "Failed to build"
+	[ -f ${S}/bin/*/v2ray ] || die "Failed to build"
 }
 
 src_install() {
@@ -77,7 +77,6 @@ src_install() {
 
 	insinto /etc/v2ray
 	doins *.json
-	#fperms 0640 *.json
 
 	insinto /usr/share/v2ray
 	doins geoip.dat geosite.dat
@@ -85,7 +84,7 @@ src_install() {
 	dodoc readme.md
 
 	systemd_dounit systemd/v2ray.service
-	sed -i -e "s/^# User/User/" -e "s/^# Group/Group/" $(systemd_get_systemunitdir)/v2ray.service
+	sed -i -e "s/^# User/User/" -e "s/^# Group/Group/" "${D}$(systemd_get_systemunitdir)/v2ray.service"
 
 	popd
 }
