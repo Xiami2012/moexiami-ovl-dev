@@ -22,8 +22,8 @@ RDEPEND="net-libs/nodejs"
 S="${WORKDIR}/${MY_P}-linux-x86_64"
 
 pkg_setup() {
-	enewgroup ${MY_PN}
-	enewuser ${MY_PN} -1 -1 /opt/${MY_PN} ${MY_PN}
+	enewgroup kibana
+	enewuser kibana -1 -1 /opt/${MY_PN} kibana
 }
 
 src_prepare() {
