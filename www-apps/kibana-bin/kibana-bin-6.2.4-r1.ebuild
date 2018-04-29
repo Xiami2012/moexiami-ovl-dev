@@ -33,14 +33,10 @@ src_prepare() {
 	rm -r node || die
 
 	# remove empty unused directory
-	rm -r data || die
+	rmdir data || die
 }
 
 src_install() {
-	diropts -m 0750 -o kibana -g kibana
-	keepdir /var/log/${MY_PN}
-	diropts
-
 	insinto /etc/${MY_PN}
 	doins -r config/.
 	rm -r config || die
@@ -56,6 +52,9 @@ src_install() {
 	doins -r .
 
 	chmod +x "${ED%/}"/opt/${MY_PN}/bin/* || die
+
+	diropts -m 0750 -o kibana -g kibana
+	keepdir /var/log/${MY_PN}
 }
 
 pkg_postinst() {
