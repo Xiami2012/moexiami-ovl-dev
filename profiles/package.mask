@@ -1,0 +1,3 @@
+# Xiami <i@f2light.com> (02 May 2018)
+# www-apps/kibana-bin-6.2.4-r1 has been adopted by gentoo official repository
+<=www-apps/kibana-bin-6.2.4-r1
