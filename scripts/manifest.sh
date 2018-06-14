@@ -32,6 +32,7 @@ else
 fi
 
 rsync -rlcvhi --delete --exclude ".git" --exclude "Manifest" --exclude "/metadata/md5-cache" "${git_repo_path}/" "${prod_repo_path}/" || { echo "!! rsync died with $?"; exit 1; }
+rsync -rlcvhi --delete --update --exclude ".git" --exclude "/metadata/md5-cache" "${git_repo_path}/" "${prod_repo_path}/" || { echo "!! rsync died with $?"; exit 1; }
 
 sed -i -e "/^thin-manifests *=/c \
 thin-manifests = false" -e "/^sign-commits *=/c \
