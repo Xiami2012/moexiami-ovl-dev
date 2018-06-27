@@ -3,10 +3,8 @@
 # Do full-manifest and egencache for production use
 #
 
-: ${PROD_REPO_NAME=spear_of_adun}
-
 # Detect git work dir
-git_repo_path=`git rev-parse --absolute-git-dir 2>/dev/null`
+git_repo_path=`git rev-parse --show-toplevel 2>/dev/null`
 if [ -z "${git_repo_path}" ]; then
 	echo "Please run me in a git repo." >&2
 	exit 1
@@ -15,12 +13,13 @@ if [ "`git rev-parse --is-bare-repository`" = "true" ]; then
 	echo "Bare repo not supported!" >&2
 	exit 1
 fi
-git_repo_path=`dirname "$git_repo_path"`
+
+repo_name=$(<${git_repo_path}/profiles/repo_name)
 
 # Detect prod work dir
-prod_repo_path=`portageq get_repo_path / $PROD_REPO_NAME`
+prod_repo_path=`portageq get_repo_path / $repo_name`
 if [ -z "$prod_repo_path" ]; then
-	echo "Repo $PROD_REPO_NAME not exist in EROOT=/"
+	echo "Repo $repo_name not exist in EROOT=/"
 	exit 1
 fi
 
@@ -41,4 +40,4 @@ sign-commits = false" "${prod_repo_path}/metadata/layout.conf"
 pushd "$prod_repo_path"
 repoman manifest || { echo "!! repoman died with $?"; exit 1; }
 
-$_sudo egencache --repo $PROD_REPO_NAME --update -j`nproc` || { echo "!! egencache died with $?"; exit 1; }
+$_sudo egencache --repo $repo_name --update -j`nproc` || { echo "!! egencache died with $?"; exit 1; }
