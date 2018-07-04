@@ -6,7 +6,7 @@ PartOf=vmtoolsd.service
 
 [Service]
 # For dev-libs/xerces-c[iconv,-icu]
-Environment=XERCESC_NLS_HOME="/usr/share/xerces-c/msg"
+EnvironmentFile=-/etc/env.d/50xerces-c
 ExecStart=/usr/bin/VGAuthService -s
 TimeoutStopSec=5
 
