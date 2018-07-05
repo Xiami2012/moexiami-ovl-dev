@@ -13,7 +13,7 @@ SRC_URI="https://github.com/vmware/open-vm-tools/releases/download/stable-${PV}/
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="X caf +deploypkg +dnet doc +fuse gtk2 gtk3 gtkmm +grabbitmqproxy +icu multimon pam +resolutionkms +ssl static-libs test +vgauth +xml-security-c xmlsec"
+IUSE="X caf +deploypkg +dnet doc +fuse +grabbitmqproxy gtk2 gtk3 gtkmm +icu multimon pam +resolutionkms +ssl static-libs test +vgauth +xml-security-c xmlsec"
 REQUIRED_USE="
 	X? ( ^^ ( gtk2 gtk3 ) )
 	gtk2? ( X )
