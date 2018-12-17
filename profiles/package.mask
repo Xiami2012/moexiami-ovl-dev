@@ -1,8 +1,14 @@
-# Xiami <i@f2light.com> (02 May 2018)
-# www-apps/kibana-bin-6.2.4-r1 has been adopted by gentoo official repository
-<=www-apps/kibana-bin-6.2.4-r1
-
 # Xiami <i@f2light.com> (05 Jul 2018)
 # app-emulation/open-vm-tools-10.2.5-r1 has been adopted by ::gentoo w/o gtk2 support
 # Feel free to unmask it if you need to compile with gtk2
 <=app-emulation/open-vm-tools-10.2.5-r1
+
+# Xiami <i@f2light.com> (17 Dec 2018)
+# I don't maintain it anymore. See gig overlay if you need it
+# Removal in 30 days
+net-proxy/v2ray
+
+# Xiami <i@f2light.com> (17 Dec 2018)
+# sys-block/perccli-7.5.007.0529 has been adopted by ::gentoo
+# Removal in 30 days
+<=sys-block/perccli-7.5.007.0529
