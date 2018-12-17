@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -64,14 +64,14 @@ src_compile() {
 	# Cannot use full GOPATH now
 	# See https://github.com/v2ray/ext/issues/11
 	GOPATH="${S}" \
-		${S}/bin/vbuild
+		"${S}"/bin/vbuild
 	# vbuild returns 0 even on failure
-	[ -f ${S}/bin/*/v2ray ] || die "Failed to build"
+	[ -f "${S}"/bin/*/v2ray ] || die "Failed to build"
 }
 
 src_install() {
-	gobindir=`dirname ${S}/bin/*/v2ray`
-	pushd $gobindir
+	gobindir=`dirname "${S}"/bin/*/v2ray`
+	pushd "$gobindir"
 
 	dobin v2ray v2ctl
 
