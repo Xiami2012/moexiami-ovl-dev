@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>i@f2light.com</email>
+		<name>Xiami</name>
+	</maintainer>
+	<longdescription lang="en">
+		StrongSwan is direct descendant of the discontinued FreeS/WAN project.
+		As an IPsec based VPN solution which is focused on security and ease of
+		use, it fully implements the IKEv1/IKEv2 protocols, MOBIKE, NAT-Traversal
+		via UDP encapsulation (incl. port floating) and Dead Peer Detection. It
+		also fully supports the Linux 2.6 IPsec stack, IPv6, certificates/keys on
+		Smartcards and virtual IP address pools.
+	</longdescription>
+	<use>
+		<flag name="af-alg">(Crypto) Enable AF_ALG Linux crypto API interface, provides ciphers/hashers/hmac/xcbc</flag>
+		<flag name="aikgen">Build AIK generator for TPM 1.2</flag>
+		<flag name="botan">(Crypto) Enable crypto backend based on Botan, provides RSA/ECDSA/DH/ECDH/X25519/ciphers/hashers/HMAC/RNG</flag>
+		<flag name="charon">Build the IKEv1/IKEv2 keying daemon charon</flag>
+		<flag name="cmd">Build the command line IKE client charon-cmd</flag>
+		<flag name="conftest">Build Suite B conformance test framework</flag>
+		<flag name="eap">(Auth) Enable EAP methods</flag>
+		<flag name="eap-simaka">(Auth) Enable EAP-SIM/AKA support</flag>
+		<flag name="gcrypt">(Crypto) Enable crypto backend based on libgcrypt, provides RSA/DH/ciphers/hashers/rng</flag>
+		<flag name="gmp">(Crypto) Enable RSA/DH crypto backend based on libgmp</flag>
+		<flag name="networkmanager">Build NetworkManager backend</flag>
+		<flag name="non-root">Force IKEv1/IKEv2 daemons to normal user privileges. Disable only if you really require superuser privileges.</flag>
+		<flag name="openssl">(Crypto) Enable crypto backend based on OpenSSL, provides RSA/ECDSA/DH/ECDH/ciphers/hashers/HMAC/X.509/CRL/RNG</flag>
+		<flag name="pam">(Auth) XAuth backend that uses PAM modules to verify passwords</flag>
+		<flag name="pkcs11">(Auth) PKCS#11 smartcard backend</flag>
+		<flag name="pki">Build pki certificate utility</flag>
+		<flag name="scepclient">Build SCEP client tool</flag>
+		<flag name="soup">libsoup based HTTP fetcher</flag>
+		<flag name="strongswan_plugins_acert">(Auth) Enable support of X.509 attribute certificates</flag>
+		<flag name="strongswan_plugins_addrblock">(Auth) Enable narrowing traffic selectors to RFC 3779 address blocks in X.509 certificates</flag>
+		<flag name="strongswan_plugins_aes">(Crypto) Enable AES software implementation</flag>
+		<flag name="strongswan_plugins_aesni">(Crypto) Enable Intel AES-NI</flag>
+		<flag name="strongswan_plugins_agent">(Auth) Enable RSA/ECDSA private key backend connecting to SSH-Agent</flag>
+		<flag name="strongswan_plugins_attr">Provides IKE attributes configured in strongswan.conf</flag>
+		<flag name="strongswan_plugins_bliss">(Crypto) Enable Bimodal Lattice Signature Scheme (BLISS) post-quantum computer signature scheme</flag>
+		<flag name="strongswan_plugins_blowfish">(Crypto) (Deprecated) Enable Blowfish cipher software implementation</flag>
+		<flag name="strongswan_plugins_bypass-lan">Support of automatically installing and updating bypass policies for locally attached subnets</flag>
+		<flag name="strongswan_plugins_ccm">(Crypto) Enable CCM cipher mode wrapper</flag>
+		<flag name="strongswan_plugins_certexpire">Support of exporting expiration dates of used certificates</flag>
+		<flag name="strongswan_plugins_chapoly">(Crypto) Enable ChaCha20/Poly1305 AEAD implementation and ChaCha20 XOF</flag>
+		<flag name="strongswan_plugins_cmac">(Crypto) Enable CMAC cipher mode wrapper</flag>
+		<flag name="strongswan_plugins_connmark">Plugin using Netfilter conntrack marks to handle multiple transport mode clients</flag>
+		<flag name="strongswan_plugins_constraints">(Auth) Enable X.509 certificate advanced constraint checking</flag>
+		<flag name="strongswan_plugins_coupling">(Auth) Enable permanent peer certificate coupling</flag>
+		<flag name="strongswan_plugins_ctr">(Crypto) Enable CTR cipher mode wrapper</flag>
+		<flag name="strongswan_plugins_curve25519">(Crypto) Enable X25519 DH group and Ed25519 public key algorithms</flag>
+		<flag name="strongswan_plugins_des">(Crypto) (Deprecated) Enable DES/3DES cipher software implementation</flag>
+		<flag name="strongswan_plugins_dhcp">Support of requesting virtual IP address from a DHCP server</flag>
+		<flag name="strongswan_plugins_dnscert">(Auth) Plugin providing authentication via CERT RRs protected by DNSSEC</flag>
+		<flag name="strongswan_plugins_duplicheck">Support of advanced duplicate checking with liveness test and notifications</flag>
+		<flag name="strongswan_plugins_error-notify">Enable notification about errors via UNIX socket</flag>
+		<flag name="strongswan_plugins_ext-auth">(Auth) Enable invoking an external script for custom authorization rules</flag>
+		<flag name="strongswan_plugins_farp">Enable faking ARP responses for requests to a virtual IP address assigned to a peer</flag>
+		<flag name="strongswan_plugins_files">Enable fetcher for local file:// URIs</flag>
+		<flag name="strongswan_plugins_forecast">Plugin providing multicast and broadcast forwarding</flag>
+		<flag name="strongswan_plugins_gcm">(Crypto) Enable GCM cipher mode wrapper</flag>
+		<flag name="strongswan_plugins_ha">Enable High-Availability clustering</flag>
+		<flag name="strongswan_plugins_hmac">(Crypto) Enable HMAC wrapper using various hashers</flag>
+		<flag name="strongswan_plugins_ipseckey">(Auth) Plugin providing authentication via IPSECKEY RRs protected by DNSSEC</flag>
+		<flag name="strongswan_plugins_kernel-libipsec">Enable IPsec "kernel" interface in user-space using libipsec</flag>
+		<flag name="strongswan_plugins_kernel-pfkey">IPsec kernel interface using PF_KEY</flag>
+		<flag name="strongswan_plugins_led">Support of letting Linux LED subsystem LEDs blink on IKE activity</flag>
+		<flag name="strongswan_plugins_lookip">Support virtual IP lookup facility using a UNIX socket</flag>
+		<flag name="strongswan_plugins_md5">(Crypto) (Deprecated) Enable MD5 hasher software implementation</flag>
+		<flag name="strongswan_plugins_newhope">(Crypto) Enable key exchange based on post-quantum computer New Hope algorithm</flag>
+		<flag name="strongswan_plugins_ntru">(Crypto) Enable key exchange based on post-quantum computer NTRU encryption</flag>
+		<flag name="strongswan_plugins_padlock">(Crypto) Enable VIA padlock crypto backend, provides AES128/SHA1</flag>
+		<flag name="strongswan_plugins_p-cscf">Plugin that requests P-CSCF server addresses from an ePDG via IKEv2</flag>
+		<flag name="strongswan_plugins_radattr">Plugin to inject and process custom RADIUS attributes as IKEv2 client</flag>
+		<flag name="strongswan_plugins_random">(Crypto) Enable RNG reading from /dev/[u]random</flag>
+		<flag name="strongswan_plugins_rc2">(Crypto) Enable RC2 cipher software implementation</flag>
+		<flag name="strongswan_plugins_rdrand">(Crypto) Enable high quality / high performance random source using the Intel rdrand instruction</flag>
+		<flag name="strongswan_plugins_resolve">Enable writing name servers received via IKE to a resolv.conf file or installs them via resolvconf(8)</flag>
+		<flag name="strongswan_plugins_revocation">(Auth) Enable X.509 CRL/OCSP revocation checking</flag>
+		<flag name="strongswan_plugins_save-keys">Development/Debugging plugin that saves IKE and/or ESP keys to files compatible with Wireshark</flag>
+		<flag name="strongswan_plugins_sha1">(Crypto) Enable SHA1 hasher software implementation</flag>
+		<flag name="strongswan_plugins_sha2">(Crypto) Enable SHA2_224/SHA2_256/SHA2_384/SHA2_512 hasher software implementation</flag>
+		<flag name="strongswan_plugins_sha3">(Crypto) Enable SHA3_224/SHA3_256/SHA3_384/SHA3_512 hasher software implementation and SHAKE128/SHAKE256 XOF</flag>
+		<flag name="strongswan_plugins_socket-default">Default socket implementation for IKE messages</flag>
+		<flag name="strongswan_plugins_socket-dynamic">Dynamic binding socket implementation, capable of sending IKE messages on any port</flag>
+		<flag name="strongswan_plugins_systime-fix">Handle invalid system time when checking certificates</flag>
+		<flag name="strongswan_plugins_tpm">(Auth) Access persistent RSA and ECDSA private keys bound to Trusted Platform Module 2.0</flag>
+		<flag name="strongswan_plugins_unity">Enable Cisco Unity extensions for IKEv1</flag>
+		<flag name="strongswan_plugins_updown">Enable shell script invocation during tunnel up/down events</flag>
+		<flag name="strongswan_plugins_whitelist">(Auth) Enable checking authenticated identities against a whitelist</flag>
+		<flag name="strongswan_plugins_xauth-generic">(Auth) Generic XAuth backend that provides passwords from ipsec.secrets and other credential sets</flag>
+		<flag name="strongswan_plugins_xauth-noauth">(Auth) XAuth backend that does not do any authentication</flag>
+		<flag name="strongswan_plugins_xcbc">(Crypto) Enable XCBC wrapper using various ciphers</flag>
+		<flag name="swanctl">Build swanctl configuration and control tool</flag>
+		<flag name="systemd">Build systemd specific IKE daemon charon-systemd</flag>
+		<flag name="tnc">Support Trusted Network Connect</flag>
+		<flag name="unbound">DNSSEC enabled resolver using libunbound</flag>
+	</use>
+	<upstream>
+		<remote-id type="cpe">cpe:/a:strongswan:strongswan</remote-id>
+	</upstream>
+</pkgmetadata>
