@@ -57,6 +57,12 @@ thin-manifests = false" -e "/^sign-commits *=/c \
 sign-commits = false" "${prod_repo_path}/metadata/layout.conf"
 
 # Generate metadata
-$_sudo egencache --repo $repo_name --update --update-use-local-desc --update-pkg-desc-index --update-manifests -j`nproc` || { echo "!! egencache died with $?"; exit 1; }
+$_sudo egencache --repo $repo_name --update --update-use-local-desc \
+	--update-pkg-desc-index --update-manifests -j`nproc` \
+	|| { echo "!! egencache died with $?"; exit 1; }
 # Time format: from portage.const import TIMESTAMP_FORMAT
-date -u "+%a, %d %b %Y %H:%M:%S +0000" > ${prod_repo_path}/metadata/timestamp.chk
+pushd "${prod_repo_path}" >/dev/null
+prod_repo_need_update=`git status --porcelain`
+popd >/dev/null
+[ -n "$prod_repo_need_update" ] && date -u "+%a, %d %b %Y %H:%M:%S +0000" \
+	> ${prod_repo_path}/metadata/timestamp.chk
