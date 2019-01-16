@@ -1,9 +1,9 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-inherit toolchain-funcs
+inherit toolchain-funcs multilib-minimal
 
 DESCRIPTION="Shared library to impliment the scrypt algorithm"
 HOMEPAGE="https://github.com/technion/libscrypt"
@@ -16,6 +16,7 @@ IUSE="static-libs"
 
 DEPEND=""
 RDEPEND="${DEPEND}"
+BDEPEND=""
 
 PATCHES=(
 	"${FILESDIR}/${P}-build.patch"
@@ -31,14 +32,18 @@ pkg_setup() {
 	unset LDFLAGS
 }
 
-src_compile() {
-	emake \
-		CC=$(tc-getCC)
+src_prepare() {
+	default
+
+	multilib_copy_sources
 }
 
-src_install() {
+multilib_src_compile() {
+	emake \
+		CC="$(tc-getCC)"
+}
+
+multilib_src_install() {
 	emake DESTDIR="${D}" LIBDIR="${PREFIX}/$(get_libdir)" install
 	use static-libs && emake DESTDIR="${D}" LIBDIR="${PREFIX}/$(get_libdir)" install-static
-
-	einstalldocs
 }
