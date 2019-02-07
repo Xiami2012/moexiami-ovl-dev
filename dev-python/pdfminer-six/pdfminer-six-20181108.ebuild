@@ -21,6 +21,7 @@ RDEPEND="
 	dev-python/six[${PYTHON_USEDEP}]
 	dev-python/sortedcontainers[${PYTHON_USEDEP}]
 	$(python_gen_cond_dep 'dev-python/chardet[${PYTHON_USEDEP}]' -3)
+	!!app-text/pdfminer
 "
 BDEPEND=""
 
