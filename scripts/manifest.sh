@@ -58,7 +58,7 @@ sign-commits = false" "${prod_repo_path}/metadata/layout.conf"
 
 # Generate metadata
 pushd "${prod_repo_path}" >/dev/null
-repoman manifest
+pkgdev manifest
 $_sudo egencache --repo $repo_name --update --update-use-local-desc \
 	--update-pkg-desc-index -j`nproc` \
 	|| { echo "!! egencache died with $?"; exit 1; }
