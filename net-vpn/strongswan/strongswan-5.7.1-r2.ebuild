@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI="7"
-inherit linux-info systemd user
+inherit linux-info systemd
 
 DESCRIPTION="IPsec-based VPN solution, supporting IKEv1/IKEv2 and MOBIKE"
 HOMEPAGE="https://www.strongswan.org/"
@@ -67,7 +67,11 @@ REQUIRED_USE="
 		|| ( openssl strongswan_plugins_sha1 )
 	)"
 
-COMMON_DEPEND="gmp? ( >=dev-libs/gmp-4.1.4:= )
+COMMON_DEPEND="non-root? (
+		acct-user/ipsec
+		acct-group/ipsec
+	)
+	gmp? ( >=dev-libs/gmp-4.1.4:= )
 	ldap? ( net-nds/openldap )
 	curl? ( net-misc/curl )
 	unbound? ( net-dns/unbound:= net-libs/ldns )
@@ -141,11 +145,6 @@ pkg_setup() {
 			ewarn "If you need it, please use kernel >= 2.6.34."
 			ewarn
 		fi
-	fi
-
-	if use non-root; then
-		enewgroup ${UGID}
-		enewuser ${UGID} -1 -1 -1 ${UGID}
 	fi
 }
 
