@@ -60,7 +60,7 @@ sign-commits = false" "${prod_repo_path}/metadata/layout.conf"
 pushd "${prod_repo_path}" >/dev/null
 pkgdev manifest
 $_sudo egencache --repo $repo_name --update --update-use-local-desc \
-	--update-pkg-desc-index -j`nproc` \
+	--update-pkg-desc-index --update-manifests -j`nproc` \
 	|| { echo "!! egencache died with $?"; exit 1; }
 # Time format: from portage.const import TIMESTAMP_FORMAT
 prod_repo_need_update=`git status --porcelain`
