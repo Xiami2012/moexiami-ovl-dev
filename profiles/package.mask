@@ -1,5 +1,0 @@
-# Xiami <i@f2light.com> (2023-01-03)
-# Use app-text/pdfminer in gentoo repo instead.
-# (It is the pdfminer-six implementation now)
-# Removal on 2023-02-02.
-dev-python/pdfminer-six

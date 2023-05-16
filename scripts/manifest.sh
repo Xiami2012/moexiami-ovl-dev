@@ -62,8 +62,11 @@ pkgdev manifest
 $_sudo egencache --repo $repo_name --update --update-use-local-desc \
 	--update-pkg-desc-index --update-manifests -j`nproc` \
 	|| { echo "!! egencache died with $?"; exit 1; }
+# egencache --write-timestamp is not used because We want timestamp.chk
+# to get updated only when there are updates.
 # Time format: from portage.const import TIMESTAMP_FORMAT
 prod_repo_need_update=`git status --porcelain`
 [ -n "$prod_repo_need_update" ] && date -u "+%a, %d %b %Y %H:%M:%S +0000" \
 	> metadata/timestamp.chk
+# git commit with pkgdev and egencache version
 popd >/dev/null
