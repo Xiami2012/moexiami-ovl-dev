@@ -59,6 +59,8 @@ sign-commits = false" "${prod_repo_path}/metadata/layout.conf"
 # Generate metadata
 pushd "${prod_repo_path}" >/dev/null
 pkgdev manifest
+# From https://wiki.gentoo.org/wiki/Ebuild_repository#Cache_generation
+#  and --regen in emerge(1)
 $_sudo egencache --repo $repo_name --update --update-use-local-desc \
 	--update-pkg-desc-index --update-manifests -j`nproc` \
 	|| { echo "!! egencache died with $?"; exit 1; }
