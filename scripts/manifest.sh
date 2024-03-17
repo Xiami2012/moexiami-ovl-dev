@@ -47,8 +47,10 @@ rsync -rlcvhi --delete \
 	"${git_repo_path}/" "${prod_repo_path}/" \
 	|| { echo "!! rsync died with $?"; exit 1; }
 rsync -rlcvhi --delete --update \
-	--exclude "*" \
+	--exclude-from="${git_repo_path}/scripts/manifest-rsync-exclude.files" \
+	--include "*/" \
 	--include-from="${git_repo_path}/scripts/manifest-rsync-update.files" \
+	--exclude "*" \
 	"${git_repo_path}/" "${prod_repo_path}/" \
 	|| { echo "!! rsync died with $?"; exit 1; }
 
