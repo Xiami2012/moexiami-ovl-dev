@@ -25,6 +25,7 @@
 # represented as a cpu_flags USE flag, are presumed to be present.
 #
 # Currently only GOAMD64 is supported.
+# Also note that, GO386 and GOARM are set by go-env.eclass .
 # @EXAMPLE:
 # To utilize this eclass, inherit it and invoke go-microarch_setenv within
 # src_compile.
