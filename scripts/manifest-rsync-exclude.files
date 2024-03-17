@@ -1,4 +1,6 @@
 /.git/
+.gitignore
+/scripts
 
 # Generated metadata
 /metadata/md5-cache/
