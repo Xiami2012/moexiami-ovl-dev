@@ -1,0 +1,9 @@
+# Xiami <i@f2light.com> (2024-03-17)
+# I was adding this (IUSE=static-libs) due to work-related demands. With the
+# benefit of hindsight, I acknowledge that this approach was suboptimal.
+# Presently, in situations where static linking is indispensable, my
+# preference leans decidedly towards bundling dependencies at the project
+# level rather than installing static libraries system-wide.
+# Use libscrypt in gentoo repo instead.
+# Removal in 30 days.
+app-crypt/libscrypt
