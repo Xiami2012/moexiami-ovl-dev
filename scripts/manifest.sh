@@ -34,13 +34,6 @@ if [ "$git_repo_path" = "$prod_repo_path" ]; then
 	exit 1
 fi
 
-# For commands require root privilege
-if [ "$EUID" -ne 0 ]; then
-	_sudo=sudo
-else
-	_sudo=
-fi
-
 rsync -rlcvhi --delete \
 	--exclude-from="${git_repo_path}/scripts/manifest-rsync-exclude.files" \
 	--exclude-from="${git_repo_path}/scripts/manifest-rsync-update.files" \
@@ -61,13 +54,32 @@ sign-commits = false" "${prod_repo_path}/metadata/layout.conf"
 # Generate metadata
 pushd "${prod_repo_path}" >/dev/null
 pkgdev manifest
+
 # From https://wiki.gentoo.org/wiki/Ebuild_repository#Cache_generation
-#  and --regen in emerge(1)
-$_sudo egencache --repo $repo_name --update --update-use-local-desc \
-	--update-pkg-desc-index --update-manifests -j`nproc` \
+#  and --regen in emerge(1). By searching "egencache" in wiki,
+#  https://wiki.gentoo.org/wiki/Project:Portage/Repository_verification#Using_it
+#  https://wiki.gentoo.org/wiki//var/db/repos/gentoo/metadata/md5-cache
+# Currently (2025-07-06):
+#  pkgcore-0.12.30 can't do egencache --update-manifests
+#   pkgdev manifest can only work in thin-manifests repo
+#  pkgcraft-tools-0.0.26 can't do egencache --update-pkg-desc-index \
+#   --update-manifests
+# Facts on ::gentoo (2025-07-06):
+#  md5-cache generated from egencache and pmaint have differences \
+#   in order of _eclasses_ . So we can infer from that:
+#  [sync-type: rsync, webrsync] sources are using egencache
+#  [sync-type: git (gentoo-mirror/gentoo)] source is applying pmaint
+# Use pmaint for md5-cache generation, egencache for the rest.
+# We prefer this only because it gets rid of running as root.
+pmaint regen "${repo_name}" -t`nproc` \
+	|| { echo "!! pmaint died with $?"; exit 1; }
+# --update-pkg-desc-index reads md5-cache
+egencache --repo $repo_name --update-use-local-desc --update-pkg-desc-index \
+	--update-manifests -j`nproc` \
 	|| { echo "!! egencache died with $?"; exit 1; }
-# egencache --write-timestamp is not used because We want timestamp.chk
-# to get updated only when there are updates.
+
+# egencache --write-timestamp or pmaint regen --rsync are not used
+# because we want timestamp.chk to get updated only when there are updates.
 # Time format: from portage.const import TIMESTAMP_FORMAT
 prod_repo_need_update=`git status --porcelain`
 [ -n "$prod_repo_need_update" ] && date -u "+%a, %d %b %Y %H:%M:%S +0000" \
