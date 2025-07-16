@@ -1,0 +1,66 @@
+diff --git a/tools/hv/hv_get_dhcp_info.sh b/tools/hv/hv_get_dhcp_info.sh
+index 2f2a3c7df3de8..b45507a1d15bc 100755
+--- a/tools/hv/hv_get_dhcp_info.sh
++++ b/tools/hv/hv_get_dhcp_info.sh
+@@ -17,9 +17,35 @@
+ # this script can be based on the Network Manager APIs for retrieving DHCP
+ # information.
+ 
+-if_file="/etc/sysconfig/network-scripts/ifcfg-"$1
++# TODO: NetworkManager support
+ 
+-dhcp=$(grep "dhcp" $if_file 2>/dev/null)
++if [[ -f /usr/bin/networkctl ]]; then
++	dhcp=$(networkctl cat @$1 2>/dev/null | grep -E "DHCP=(yes|ipv4|ipv6)")
++fi
++
++collect_ifnames() {
++	local result
++
++	for i in /sys/class/net/*; do
++		result=$(udevadm info $i 2>/dev/null | grep ID_NET_NAME_ | cut -d= -f2)
++		if grep -q "$1" <<<"$result"; then
++			echo "$result"
++			return
++		fi
++	done
++}
++
++NETIFRC_CONF=/etc/conf.d/net
++
++if [[ "$dhcp" = "" && -f "$NETIFRC_CONF" ]]; then
++	for i in $(collect_ifnames "$1"); do
++		# For case of multiple definition on config_eth0
++		dhcp=$(grep "config_$i=" "$NETIFRC_CONF" | tail -1 | grep "config_$i=dhcp")
++		if [[ "$dhcp" != "" ]]; then
++			break;
++		fi
++	done
++fi
+ 
+ if [ "$dhcp" != "" ];
+ then
+diff --git a/tools/hv/hv_get_dns_info.sh b/tools/hv/hv_get_dns_info.sh
+index 268521234d4b0..d6102dfa52923 100755
+--- a/tools/hv/hv_get_dns_info.sh
++++ b/tools/hv/hv_get_dns_info.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ 
+ # This example script parses /etc/resolv.conf to retrive DNS information.
+ # In the interest of keeping the KVP daemon code free of distro specific
+@@ -10,4 +10,12 @@
+ # this script can be based on the Network Manager APIs for retrieving DNS
+ # entries.
+ 
+-exec awk '/^nameserver/ { print $2 }' /etc/resolv.conf 2>/dev/null
++if [[ -f /etc/resolv.conf ]]; then
++	if grep nameserver /etc/resolv.conf | grep -qv 127.0.0.53; then
++		exec awk '/^nameserver/ { print $2 }' /etc/resolv.conf 2>/dev/null
++	fi
++fi
++
++if [[ -f /run/systemd/resolve/stub-resolv.conf ]]; then
++	exec awk '/^nameserver/ { print $2 }' /run/systemd/resolve/resolv.conf 2>/dev/null
++fi

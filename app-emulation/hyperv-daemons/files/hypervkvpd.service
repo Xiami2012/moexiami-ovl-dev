@@ -1,0 +1,19 @@
+[Unit]
+Description=Hyper-V KVP daemon
+ConditionVirtualization=microsoft
+BindsTo=sys-devices-virtual-misc-vmbus\x21hv_kvp.device
+After=sys-devices-virtual-misc-vmbus\x21hv_kvp.device
+Before=cloud-init-local.service
+IgnoreOnIsolate=true
+
+[Service]
+ExecStart=/usr/sbin/hv_kvp_daemon -n
+CapabilityBoundingSet=
+DeviceAllow=/dev/vmbus/hv_kvp
+NoNewPrivileges=true
+ProtectControlGroups=true
+ProtectHome=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+ProtectSystem=true
+StateDirectory=hyperv

@@ -1,0 +1,2 @@
+SUBSYSTEM=="misc", KERNEL=="vmbus/hv_kvp", TAG+="systemd", ENV{SYSTEMD_WANTS}+="hypervkvpd.service"
+SUBSYSTEM=="misc", KERNEL=="vmbus/hv_vss", TAG+="systemd", ENV{SYSTEMD_WANTS}+="hypervvssd.service"
