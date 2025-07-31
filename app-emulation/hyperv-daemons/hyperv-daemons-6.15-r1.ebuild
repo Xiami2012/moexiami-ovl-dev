@@ -14,8 +14,6 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
 
-IUSE="systemd"
-
 CONFIG_CHECK="~PARAVIRT_SPINLOCKS ~ACPI ~VSOCKETS ~HYPERV_VSOCKETS
 	~PCI ~PCI_MSI ~PCI_HYPERV ~SCSI_FC_ATTRS ~HYPERV_STORAGE ~HYPERV_NET
 	~HYPERV_KEYBOARD ~DRM_HYPERV ~HID_HYPERV_MOUSE ~UIO_HV_GENERIC
@@ -39,10 +37,8 @@ src_install() {
 	rmdir "${ED}"/var/lib
 	rm "${ED}"/usr/libexec/hypervkvpd/hv_set_ifconfig
 
-	if use systemd; then
-		udev_dorules "${FILESDIR}"/90-hyperv-daemons.rules
-		systemd_dounit "${FILESDIR}"/hypervfcopyd.service
-		systemd_dounit "${FILESDIR}"/hypervkvpd.service
-		systemd_dounit "${FILESDIR}"/hypervvssd.service
-	fi
+	udev_dorules "${FILESDIR}"/90-hyperv-daemons.rules
+	systemd_dounit "${FILESDIR}"/hypervfcopyd.service
+	systemd_dounit "${FILESDIR}"/hypervkvpd.service
+	systemd_dounit "${FILESDIR}"/hypervvssd.service
 }
